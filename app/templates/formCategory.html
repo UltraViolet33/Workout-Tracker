@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+
+{% block title %} Add a Category {% endblock %}
+
+
+{% block content %}
+<div class="row justify-content-center m-3">
+    <div class="col-6">
+        <h3 align="center">Add a Category</h3>
+        <form method="POST">
+            {{ form.csrf_token }}
+            <div class="mb-3">
+                {{form.name.label}}
+                {{form.name(class="form-control")}}
+            </div>
+            {% if form.name.errors %}
+            <ul class="errors">
+                {% for error in form.name.errors %}
+                <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+            <div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </form>
+
+    </div>
+</div>
+{% endblock %}

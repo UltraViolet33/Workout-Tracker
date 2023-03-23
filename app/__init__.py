@@ -7,11 +7,13 @@ import sqlalchemy as sa
 
 db = SQLAlchemy()
 
+
 def create_app(config_type=None):
     app = Flask(__name__)
 
     if config_type == None:
-        config_type = os.getenv('CONFIG_TYPE', default='config.DevelopmentConfig')
+        config_type = os.getenv(
+            'CONFIG_TYPE', default='config.DevelopmentConfig')
 
     app.config.from_object(config_type)
 
