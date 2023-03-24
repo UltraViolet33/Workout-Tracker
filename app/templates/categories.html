@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+
+{% block title %} All categories {% endblock %}
+
+
+{% block content %}
+<div class="d-flex flex-column justify-content-center h-100">
+    <div class="row justify-content-center">
+        <div class="col-12">
+            <h1 class="text-center">
+                All Categories
+            </h1>
+        </div>
+    </div>
+</div>
+<div class="row justify-content-center align-items-center">
+    <div class="col-12 col-md-8">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Edit</th>
+                    <th scope="col">Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for category in categories %}
+                <tr>
+                    <th scope="row">
+                        {{ category.id }}
+                    </th>
+                    <td>
+                        {{ category.name }}
+                    </td>
+                    <td><a href="" class="btn btn-primary">Edit</a></td>
+                    <td>
+
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
