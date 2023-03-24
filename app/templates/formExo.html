@@ -8,9 +8,9 @@
 <div class="row justify-content-center m-3">
     <div class="col-6">
         {% if exo %}
-            <h3 align="center">Edit Exo {{exo.name}}</h3>
+        <h3 align="center">Edit Exo {{exo.name}}</h3>
         {% else %}
-            <h3 align="center">Add a Exo</h3>
+        <h3 align="center">Add a Exo</h3>
         {% endif %}
 
         <form method="POST">
@@ -19,9 +19,9 @@
                 {{form.name.label}}
 
                 {% if exo %}
-                    {{form.name(class="form-control", value=exo.name)}}
+                {{form.name(class="form-control", value=exo.name)}}
                 {% else %}
-                    {{form.name(class="form-control")}}
+                {{form.name(class="form-control")}}
                 {% endif %}
             </div>
             {% if form.name.errors %}
@@ -33,14 +33,19 @@
             {% endif %}
             <div class="mb-3">
                 {{form.description.label}}
+
+                {% if exo %}
                 {{form.description(class="form-control")}}
+                {% else %}
+                {{form.description(class="form-control")}}
+                {% endif %}
             </div>
 
             <div class="mb-3">
                 {{form.category.label}}
                 {{form.category(class="form-control")}}
             </div>
-            
+
             <div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </div>
