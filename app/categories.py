@@ -2,7 +2,6 @@ from flask import Blueprint, request, render_template, redirect, url_for, reques
 from . import db
 from .models.Category import Category
 from sqlalchemy.sql.expression import func
-
 from flask_wtf import FlaskForm
 from wtforms import StringField
 from wtforms.validators import DataRequired
@@ -21,7 +20,6 @@ def create_category():
 
     if form.validate_on_submit():
         check_category_exits = Category.query.filter_by(name=form.name.data).first()
-        print(check_category_exits)
 
         if check_category_exits == None:
 
@@ -42,3 +40,29 @@ def get_all_categories():
 
     categories = Category.query.all()
     return render_template("categories.html", categories=categories)
+
+
+@categories.route("/edit/<id>", methods=["GET", "POST"])
+def edit_category(id):
+
+    category = Category.query.filter_by(id=id).first()
+    form = CategoryForm()
+
+    if category == None:
+        flash("This category does not exist! ", category="error")
+        return redirect("/categories/all")
+    
+
+    if form.validate_on_submit():
+        check_category_exits = Category.query.filter(Category.name==form.name.data, Category.id != category.id).first()
+
+        if check_category_exits == None:
+            category.name = form.name.data 
+            db.session.commit()
+            flash("Category edited !")
+            return redirect("/categories/all")
+
+        else:
+            flash("Category name alreadry exist !", category="error")
+    
+    return render_template("formCategory.html", category=category, form=form)
