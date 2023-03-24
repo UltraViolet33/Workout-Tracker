@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+
+{% block title %} Add a Exo {% endblock %}
+
+
+{% block content %}
+<div class="row justify-content-center m-3">
+    <div class="col-6">
+        {% if exo %}
+            <h3 align="center">Edit Exo {{exo.name}}</h3>
+        {% else %}
+            <h3 align="center">Add a Exo</h3>
+        {% endif %}
+
+        <form method="POST">
+            {{ form.csrf_token }}
+            <div class="mb-3">
+                {{form.name.label}}
+
+                {% if exo %}
+                    {{form.name(class="form-control", value=exo.name)}}
+                {% else %}
+                    {{form.name(class="form-control")}}
+                {% endif %}
+            </div>
+            {% if form.name.errors %}
+            <ul class="errors">
+                {% for error in form.name.errors %}
+                <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+            <div class="mb-3">
+                {{form.description.label}}
+                {{form.description(class="form-control")}}
+            </div>
+
+            <div class="mb-3">
+                {{form.category.label}}
+                {{form.category(class="form-control")}}
+            </div>
+            
+            <div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </form>
+
+    </div>
+</div>
+{% endblock %}

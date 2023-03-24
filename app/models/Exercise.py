@@ -9,6 +9,7 @@ class Exercise(db.Model):
     description = db.Column(db.Text, nullable=True)
     category = db.Column(db.Integer, db.ForeignKey("categories.id", ondelete="CASCADE"), nullable=False)
 
-    def __init__(self, name, description):
+    def __init__(self, name, description, category):
         self.name = name
         self.description=description
+        self.category = category
