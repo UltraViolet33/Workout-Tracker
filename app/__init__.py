@@ -22,10 +22,10 @@ def create_app(config_type=None):
 
     engine = sa.create_engine(app.config['SQLALCHEMY_DATABASE_URI'])
     inspector = sa.inspect(engine)
-    if not inspector.has_table("categories"):
-        with app.app_context():
-            db.drop_all()
-            db.create_all()
+    # # if not inspector.has_table("categories"):
+    # with app.app_context():
+    #     db.drop_all()
+    #     db.create_all()
 
     return app
 
@@ -33,8 +33,15 @@ def create_app(config_type=None):
 def initialize_extensions(app):
     db.init_app(app)
     from app.models.Category import Category
+    from app.models.Exercise import Exercise
+
 
 
 def register_blueprints(app):
+
     from .categories import categories
     app.register_blueprint(categories, url_prefix="/categories")
+
+
+    from .exercices import exercises
+    app.register_blueprint(exercises, url_prefix="/exos")
