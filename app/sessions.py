@@ -6,28 +6,38 @@ from .models.Session import Session
 
 from sqlalchemy.sql.expression import func
 from flask_wtf import FlaskForm
-from wtforms import StringField, TextAreaField, SelectField
+from wtforms import StringField, TextAreaField, SelectField, IntegerField
 from wtforms.validators import DataRequired
 
 
 sessions = Blueprint("sessions", __name__)
 
 
-# class ExerciseForm(FlaskForm):
-#     name = StringField("name", validators=[DataRequired()])
-#     description = TextAreaField("description")
-#     category = SelectField(validators=[DataRequired()])
+class SessionForm(FlaskForm):
+    
+    exo = SelectField(validators=[DataRequired()])
+    serie = IntegerField(validators=[DataRequired()])
+    repetition = IntegerField(validators=[DataRequired()])
 
 
 
-@sessions.route("/", methods=["GET"])
-def create_session():
-    pass 
+# @sessions.route("/", methods=["GET"])
+# def all_session():
+#     pass 
 
 
 
 @sessions.route("/sessions/create", methods=["GET", "POST"])
 def create_session():
+
+    form = SessionForm()
+    form.exo.choices = [(e.id, e.name) for e in Exercise.query.all()]
+
+
+    return render_template("formSession.html", form=form)
+
+
+
     # get all exos
     # check if the session already exists
     # display select fields with all exos
@@ -35,4 +45,4 @@ def create_session():
     # check if the repetiton exists already for this sessions and this exo
     # update or create
     # display all the exos on the page
-    pass 
+    
