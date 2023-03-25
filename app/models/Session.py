@@ -6,10 +6,12 @@ from datetime import datetime
 class Session_Exercises(db.Model):
     __tablename__ = "session_exercises"
 
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+
     session_id = db.Column(db.Integer, db.ForeignKey(
-        "sessions.id"), primary_key=True)
+        "sessions.id"))
     exercise_id = db.Column(db.Integer, db.ForeignKey(
-        "exercises.id"), primary_key=True)
+        "exercises.id"))
     
     series = db.Column("series", db.Integer)
     repetitions = db.Column("repetitons", db.Integer)

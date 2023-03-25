@@ -9,11 +9,13 @@
     <div class="row justify-content-center">
         <div class="col-12">
             <h1 class="text-center">
-                All Exos
+                Details Session {{session.date}}
             </h1>
         </div>
     </div>
 </div>
+
+
 
 <div class="row justify-content-center align-items-center">
     <div class="col-12 col-md-8">
@@ -22,31 +24,36 @@
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Name</th>
-                    <th scope="col">description</th>
-                    <th scope="col">Edit</th>
-                    <th scope="col">Delete</th>
+                    <th scope="col">Series nb</th>
+                    <th scope="col">Repetition nb</th>
+
                 </tr>
             </thead>
             <tbody>
-                {% for exo in exos %}
+                {% for exo in session.exercises %}
                 <tr>
                     <th scope="row">
-                        {{ exo.id }}
+                        {{ exo.exercise.id }}
                     </th>
                     <td>
-                        {{ exo.name }}
+                        {{ exo.exercise.name }}
                     </td>
-                    <td>
-                        {{ exo.description }}
-                    </td>
-                    <td><a href="/exos/edit/{{exo.id}}" class="btn btn-primary">Edit</a></td>
-                    <td>
 
+                    <td>
+                        {{ exo.series }}
                     </td>
+
+                    <td>
+                        {{ exo.repetitions }}
+                    </td>
+
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
     </div>
 </div>
+
+
+
 {% endblock %}

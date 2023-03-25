@@ -9,37 +9,34 @@
     <div class="row justify-content-center">
         <div class="col-12">
             <h1 class="text-center">
-                All Exos
+                All Sessions
             </h1>
         </div>
     </div>
 </div>
-
 <div class="row justify-content-center align-items-center">
     <div class="col-12 col-md-8">
         <table class="table">
             <thead>
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">description</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Details</th>
                     <th scope="col">Edit</th>
                     <th scope="col">Delete</th>
                 </tr>
             </thead>
             <tbody>
-                {% for exo in exos %}
+                {% for session in sessions %}
                 <tr>
                     <th scope="row">
-                        {{ exo.id }}
+                        {{ session.id }}
                     </th>
                     <td>
-                        {{ exo.name }}
+                        {{ session.date }}
                     </td>
-                    <td>
-                        {{ exo.description }}
-                    </td>
-                    <td><a href="/exos/edit/{{exo.id}}" class="btn btn-primary">Edit</a></td>
+                    <td><a href="/sessions/details/{{session.id}}" class="btn btn-primary">See more</a></td>
+                    <td><a href="/sessions/edit/{{session.id}}" class="btn btn-primary">Edit</a></td>
                     <td>
 
                     </td>

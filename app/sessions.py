@@ -4,8 +4,6 @@ from .models.Category import Category
 from .models.Exercise import Exercise
 from .models.Session import Session
 from .models.Session import Session_Exercises
-
-
 from sqlalchemy.sql.expression import func
 from flask_wtf import FlaskForm
 from wtforms import StringField, TextAreaField, SelectField, IntegerField
@@ -17,17 +15,35 @@ from datetime import datetime
 sessions = Blueprint("sessions", __name__)
 
 
-class SessionForm(FlaskForm):
-    
+class SessionForm(FlaskForm):    
     exo = SelectField(validators=[DataRequired()])
     serie = IntegerField(validators=[DataRequired()])
     repetition = IntegerField(validators=[DataRequired()])
 
 
 
-# @sessions.route("/", methods=["GET"])
-# def all_session():
-#     pass 
+@sessions.route("/", methods=["GET"])
+def all_session():
+    
+    all_sessions = Session.query.all()
+    
+    return render_template("allSessions.html", sessions=all_sessions)
+
+
+
+
+
+
+@sessions.route("/sessions/details/<id>", methods=["GET"])
+def get_session_details(id):
+
+    session = Session.query.filter_by(id=id).first()  
+
+    for exo in session.exercises:
+        print(exo)  
+
+    return render_template("detailsSession.html", session=session)
+
 
 
 
