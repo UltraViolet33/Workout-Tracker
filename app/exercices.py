@@ -47,11 +47,11 @@ def create_exercise():
 @exercises.route("/all", methods=["GET"])
 def get_all_exos():
 
-    session = Session.query.filter_by(id=1).first()
-    print(session.exercises)
+    # session = Session.query.filter_by(id=1).first()
+    # print(session.exercises)
 
-    for test in session.exercises:
-        print(test.series)
+    # for test in session.exercises:
+        # print(test.series)
 
     exos = Exercise.query.all()
     return render_template("exos.html", exos=exos)

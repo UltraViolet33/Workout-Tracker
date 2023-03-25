@@ -9,6 +9,10 @@ class Exercise(db.Model):
     description = db.Column(db.Text, nullable=True)
     category = db.Column(db.Integer, db.ForeignKey("categories.id", ondelete="CASCADE"), nullable=False)
 
+
+    sessions = db.relationship("Session_Exercises", back_populates="exercise")
+
+
     def __init__(self, name, description, category):
         self.name = name
         self.description=description
