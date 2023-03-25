@@ -2,6 +2,8 @@ from flask import Blueprint, request, render_template, redirect, url_for, reques
 from . import db
 from .models.Category import Category
 from .models.Exercise import Exercise
+from .models.Session import Session
+
 from sqlalchemy.sql.expression import func
 from flask_wtf import FlaskForm
 from wtforms import StringField, TextAreaField, SelectField
@@ -44,6 +46,12 @@ def create_exercise():
 
 @exercises.route("/all", methods=["GET"])
 def get_all_exos():
+
+    session = Session.query.filter_by(id=1).first()
+    print(session.exercises)
+
+    for test in session.exercises:
+        print(test.series)
 
     exos = Exercise.query.all()
     return render_template("exos.html", exos=exos)

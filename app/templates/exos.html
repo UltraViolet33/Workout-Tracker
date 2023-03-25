@@ -21,6 +21,7 @@
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Name</th>
+                    <th scope="col">description</th>
                     <th scope="col">Edit</th>
                     <th scope="col">Delete</th>
                 </tr>
@@ -33,6 +34,9 @@
                     </th>
                     <td>
                         {{ exo.name }}
+                    </td>
+                    <td>
+                        {{ exo.description }}
                     </td>
                     <td><a href="/exos/edit/{{exo.id}}" class="btn btn-primary">Edit</a></td>
                     <td>

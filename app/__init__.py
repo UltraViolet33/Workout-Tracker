@@ -34,6 +34,8 @@ def initialize_extensions(app):
     db.init_app(app)
     from app.models.Category import Category
     from app.models.Exercise import Exercise
+    # from app.models.Session import Session
+
 
 
 
@@ -45,3 +47,8 @@ def register_blueprints(app):
 
     from .exercices import exercises
     app.register_blueprint(exercises, url_prefix="/exos")
+
+    
+    from .sessions import sessions
+    app.register_blueprint(sessions, url_prefix="/")
+
