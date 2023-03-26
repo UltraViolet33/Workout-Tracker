@@ -1,27 +1,21 @@
-from flask import Blueprint, request, render_template, redirect, url_for, request, flash
+from flask import Blueprint, render_template, redirect, request, flash
 from . import db
 from .models.Category import Category
 from .models.Exercise import Exercise
-from .models.Session import Session
-
-from sqlalchemy.sql.expression import func
-from flask_wtf import FlaskForm
-from wtforms import StringField, TextAreaField, SelectField
-from wtforms.validators import DataRequired
+from .forms import ExerciseForm
 
 
 exercises = Blueprint("exercises", __name__)
 
 
-class ExerciseForm(FlaskForm):
-    name = StringField("name", validators=[DataRequired()])
-    description = TextAreaField("description")
-    category = SelectField(validators=[DataRequired()])
+@exercises.route("/all", methods=["GET"])
+def get_all_exos():
+    exos = Exercise.query.all()
+    return render_template("exos.html", exos=exos)
 
 
 @exercises.route("/create", methods=["GET", "POST"])
 def create_exercise():
-
     form = ExerciseForm()
     form.category.choices = [(c.id, c.name) for c in Category.query.all()]
 
@@ -29,8 +23,9 @@ def create_exercise():
         check_exo_exits = Exercise.query.filter_by(name=form.name.data).first()
 
         if check_exo_exits == None:
+            category = Category.query.filter_by(id=form.category.data).first()
             exo = Exercise(
-                name=form.name.data, description=form.description.data, category=form.category.data)
+                name=form.name.data, description=form.description.data, category=category)
 
             db.session.add(exo)
             db.session.commit()
@@ -44,34 +39,17 @@ def create_exercise():
 
 
 
-@exercises.route("/all", methods=["GET"])
-def get_all_exos():
-
-    # session = Session.query.filter_by(id=1).first()
-    # print(session.exercises)
-
-    # for test in session.exercises:
-        # print(test.series)
-
-    exos = Exercise.query.all()
-    return render_template("exos.html", exos=exos)
-
-
-
 @exercises.route("/edit/<id>", methods=["GET", "POST"])
 def edit_exos(id):
-
     exo = Exercise.query.filter_by(id=id).first()
     form = ExerciseForm()
     form.category.choices = [(c.id, c.name) for c in Category.query.all()]
-    form.category.default = 2
 
     if exo == None:
         flash("This exo does not exist! ", category="error")
         return redirect("/exos/all")
 
     if request.method == "GET":
-        
         form.description.data = exo.description
 
     if form.validate_on_submit():
@@ -80,7 +58,7 @@ def edit_exos(id):
         if check_exo_exits == None:
             exo.name = form.name.data 
             exo.description = form.description.data
-            exo.category = form.category.data
+            exo.category = Category.query.filter_by(id=form.category.data).first()
             db.session.commit()
             flash("Exo edited !")
             return redirect("/exos/all")
@@ -89,3 +67,18 @@ def edit_exos(id):
             flash("Exo name alreadry exist !", category="error")
     
     return render_template("formExo.html", exo=exo, form=form)
+
+
+@exercises.route("/delete/<id>")
+def delete_exo(id):
+    exo = Exercise.query.filter_by(id=id).first()
+    if not exo:
+        flash("This exo does not exits", category="error")
+        return redirect("/exos/all")
+    
+    db.session.delete(exo)
+    db.session.commit()
+    flash("Exo deleted !")
+    return redirect("/exos/all")
+
+

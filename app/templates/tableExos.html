@@ -22,6 +22,7 @@
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Name</th>
+                    <th scope="col">Category</th>
                     <th scope="col">description</th>
                     <th scope="col">Edit</th>
                     <th scope="col">Delete</th>
@@ -37,12 +38,13 @@
                         {{ exo.name }}
                     </td>
                     <td>
+                        {{ exo.category.name }}
+                    </td>
+                    <td>
                         {{ exo.description }}
                     </td>
                     <td><a href="/exos/edit/{{exo.id}}" class="btn btn-primary">Edit</a></td>
-                    <td>
-
-                    </td>
+                    <td><a href="/exos/delete/{{exo.id}}" onclick="return confirm('Are you sure ?')" class="btn btn-danger">Delete</a></td>
                 </tr>
                 {% endfor %}
             </tbody>

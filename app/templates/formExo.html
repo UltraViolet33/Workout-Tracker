@@ -12,12 +12,10 @@
         {% else %}
         <h3 align="center">Add a Exo</h3>
         {% endif %}
-
         <form method="POST">
             {{ form.csrf_token }}
             <div class="mb-3">
                 {{form.name.label}}
-
                 {% if exo %}
                 {{form.name(class="form-control", value=exo.name)}}
                 {% else %}
@@ -33,24 +31,20 @@
             {% endif %}
             <div class="mb-3">
                 {{form.description.label}}
-
                 {% if exo %}
                 {{form.description(class="form-control")}}
                 {% else %}
                 {{form.description(class="form-control")}}
                 {% endif %}
             </div>
-
             <div class="mb-3">
                 {{form.category.label}}
                 {{form.category(class="form-control")}}
             </div>
-
             <div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </div>
         </form>
-
     </div>
 </div>
 {% endblock %}

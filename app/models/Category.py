@@ -8,7 +8,7 @@ class Category(db.Model):
     name = db.Column(db.String(150), unique=True, nullable=False)
 
     exercises = db.relationship(
-        "Exercise", backref="categories", passive_deletes="True")
+        "Exercise", backref="category", passive_deletes="True")
 
     def __init__(self, name):
         self.name = name
