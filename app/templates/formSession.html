@@ -7,23 +7,18 @@
 {% block content %}
 <div class="row justify-content-center m-3">
     <div class="col-6">
-        
-        <h3 align="center"> Add a Exo to Session</h3>
-
+        <h3 align="center">Add a Exo to Session {{today}}</h3>
         <form method="POST">
             {{ form.csrf_token }}
-
             <div class="mb-3">
                 {{form.exo.label}}
                 {{form.exo(class="form-control")}}
             </div>
-
             <p>{{form.serie}} serie of {{form.repetition}} repetition</p>
             <div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </div>
         </form>
-
     </div>
 </div>
 {% endblock %}

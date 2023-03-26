@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, TextAreaField, SelectField
+from wtforms import StringField, TextAreaField, SelectField, IntegerField
 from wtforms.validators import DataRequired
 
 
@@ -14,3 +14,7 @@ class ExerciseForm(FlaskForm):
     category = SelectField(validators=[DataRequired()])
 
 
+class SessionForm(FlaskForm):    
+    exo = SelectField(validators=[DataRequired()])
+    serie = IntegerField(validators=[DataRequired()])
+    repetition = IntegerField(validators=[DataRequired()])
