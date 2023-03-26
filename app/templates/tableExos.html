@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 
-{% block title %} All categories {% endblock %}
+{% block title %} All Exos {% endblock %}
 
 
 {% block content %}
@@ -9,11 +9,12 @@
     <div class="row justify-content-center">
         <div class="col-12">
             <h1 class="text-center">
-                All Categories
+                {% block header %} {% endblock %}
             </h1>
         </div>
     </div>
 </div>
+
 <div class="row justify-content-center align-items-center">
     <div class="col-12 col-md-8">
         <table class="table">
@@ -21,18 +22,27 @@
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Name</th>
+                    <th scope="col">description</th>
                     <th scope="col">Edit</th>
                     <th scope="col">Delete</th>
                 </tr>
             </thead>
             <tbody>
-                {% for category in categories %}
+                {% for exo in exos %}
                 <tr>
-                    <th scope="row">{{category.id}}</th>
-                    <td> <a href="/categories/{{category.id}}">{{ category.name }} </a> </td>
-                    <td><a href="/categories/edit/{{category.id}}" class="btn btn-primary">Edit</a></td>
-                    <td><a href="/categories/delete/{{category.id}}" onclick="return confirm('Are you sure ?')"
-                            class="btn btn-danger">Delete</a></td>
+                    <th scope="row">
+                        {{ exo.id }}
+                    </th>
+                    <td>
+                        {{ exo.name }}
+                    </td>
+                    <td>
+                        {{ exo.description }}
+                    </td>
+                    <td><a href="/exos/edit/{{exo.id}}" class="btn btn-primary">Edit</a></td>
+                    <td>
+
+                    </td>
                 </tr>
                 {% endfor %}
             </tbody>

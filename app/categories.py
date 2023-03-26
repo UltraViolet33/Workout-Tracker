@@ -14,6 +14,14 @@ def get_all_categories():
 
 
 
+@categories.route("/<id>", methods=["GET"])
+def get_exos_category(id):
+    category = Category.query.filter_by(id=id).first()
+    return render_template("exosCategory.html", category=category, exos=category.exercises)
+
+
+
+
 @categories.route("/create", methods=["GET", "POST"])
 def create_category():
 
@@ -23,7 +31,6 @@ def create_category():
         check_category_exits = Category.query.filter_by(name=form.name.data).first()
 
         if check_category_exits == None:
-
             category = Category(name=form.name.data)
             db.session.add(category)
             db.session.commit()
@@ -31,7 +38,7 @@ def create_category():
             return redirect("/categories/all")
 
         else:
-            flash("Category name alreadry exist !", category="error")
+            flash("Category name already exists !", category="error")
 
     return render_template("formCategory.html", form=form)
 
@@ -41,12 +48,13 @@ def create_category():
 def edit_category(id):
 
     category = Category.query.filter_by(id=id).first()
-    form = CategoryForm()
+
 
     if category == None:
         flash("This category does not exist! ", category="error")
         return redirect("/categories/all")
     
+    form = CategoryForm()
 
     if form.validate_on_submit():
         check_category_exits = Category.query.filter(Category.name==form.name.data, Category.id != category.id).first()
@@ -58,9 +66,10 @@ def edit_category(id):
             return redirect("/categories/all")
 
         else:
-            flash("Category name alreadry exist !", category="error")
+            flash("Category name already exists !", category="error")
     
     return render_template("formCategory.html", category=category, form=form)
+
 
 
 @categories.route("/delete/<id>")
