@@ -67,14 +67,24 @@ def create_session():
 
         exo = Exercise.query.filter_by(id=form.exo.data).first()
 
-        session_exo = Session_Exercises(series=form.serie.data, repetitions=form.repetition.data)
-        session_exo.exercise = exo 
-        session.exercises.append(session_exo)
+        session_exo = Session_Exercises.query.filter(Session_Exercises.session_id==session.id, Session_Exercises.exercise_id==exo.id, Session_Exercises.repetitions == form.repetition.data).first()
 
-        db.session.add(session_exo)
-        db.session.commit()
+        if session_exo:
+            print("ok")
+            session_exo.series += form.serie.data
+            db.session.commit()
 
-        print(exo)
+        else:
+
+
+            session_exo = Session_Exercises(series=form.serie.data, repetitions=form.repetition.data)
+            session_exo.exercise = exo 
+            session.exercises.append(session_exo)
+
+            db.session.add(session_exo)
+            db.session.commit()
+
+        # print(exo)
 
 
     return render_template("formSession.html", form=form)
