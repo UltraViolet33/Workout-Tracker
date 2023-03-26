@@ -1,6 +1,5 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from os import path
 import os
 import sqlalchemy as sa
 
@@ -32,11 +31,6 @@ def create_app(config_type=None):
 
 def initialize_extensions(app):
     db.init_app(app)
-    from app.models.Category import Category
-    from app.models.Exercise import Exercise
-    # from app.models.Session import Session
-
-
 
 
 def register_blueprints(app):
@@ -51,4 +45,3 @@ def register_blueprints(app):
     
     from .sessions import sessions
     app.register_blueprint(sessions, url_prefix="/")
-

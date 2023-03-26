@@ -1,16 +1,17 @@
-from flask import Blueprint, request, render_template, redirect, url_for, request, flash
+from flask import Blueprint, render_template, redirect, flash
 from . import db
 from .models.Category import Category
-from sqlalchemy.sql.expression import func
-from flask_wtf import FlaskForm
-from wtforms import StringField
-from wtforms.validators import DataRequired
+from .forms import CategoryForm
 
 
 categories = Blueprint("categories", __name__)
 
-class CategoryForm(FlaskForm):
-    name = StringField("name", validators=[DataRequired()])
+
+@categories.route("/all", methods=["GET"])
+def get_all_categories():
+    categories = Category.query.all()
+    return render_template("categories.html", categories=categories)
+
 
 
 @categories.route("/create", methods=["GET", "POST"])
@@ -34,12 +35,6 @@ def create_category():
 
     return render_template("formCategory.html", form=form)
 
-
-@categories.route("/all", methods=["GET"])
-def get_all_categories():
-
-    categories = Category.query.all()
-    return render_template("categories.html", categories=categories)
 
 
 @categories.route("/edit/<id>", methods=["GET", "POST"])
@@ -66,3 +61,18 @@ def edit_category(id):
             flash("Category name alreadry exist !", category="error")
     
     return render_template("formCategory.html", category=category, form=form)
+
+
+@categories.route("/delete/<id>")
+def delete_categories(id):
+    category = Category.query.filter_by(id=id).first()
+    if not category:
+        flash("This category does not exits", category="error")
+        return redirect("/categories/all")
+    
+    db.session.delete(category)
+    db.session.commit()
+    flash("Category deleted !")
+    return redirect("/categories/all")
+
+
