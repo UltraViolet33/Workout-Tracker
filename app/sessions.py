@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, flash
+from flask import Blueprint, render_template, flash, request
 from . import db
 from .models.Exercise import Exercise
 from .models.Session import Session
@@ -27,7 +27,7 @@ def create_session():
     form = SessionForm()
     form.exo.choices = [(e.id, e.name) for e in Exercise.query.all()]
 
-    if form.validate_on_submit():
+    if form.validate_on_submit() or request.form.get("exo"):
 
         session = Session.query.filter_by(
             date=datetime.today().strftime('%Y-%m-%d')).first()

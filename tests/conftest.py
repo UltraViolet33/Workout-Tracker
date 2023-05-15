@@ -1,5 +1,6 @@
 import pytest
 from app import create_app, db
+from app.models.Category import Category
 
 
 @pytest.fixture(scope="module")
@@ -14,6 +15,11 @@ def test_client():
 @pytest.fixture(scope="module")
 def init_database(test_client):
     db.create_all()
+
+    category = Category(name="category1")
+
+    db.session.add(category)
+    db.session.commit()
 
     yield
 

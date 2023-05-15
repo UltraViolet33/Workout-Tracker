@@ -18,12 +18,7 @@ class Config(object):
     TESTING = False
     SECRET_KEY = os.getenv('SECRET_KEY', default='BAD_SECRET_KEY')
     
-    if os.getenv('DATABASE_URL'):
-        SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL')
-    else:
-        # SQLALCHEMY_DATABASE_URI = f"sqlite:///{os.path.join(BASEDIR, 'instance', 'app.db')}"
-        SQLALCHEMY_DATABASE_URI = f'mysql://{DB_USERNAME}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}'
-
+    SQLALCHEMY_DATABASE_URI = f'mysql://{DB_USERNAME}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
    
 
