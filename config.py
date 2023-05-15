@@ -1,12 +1,16 @@
 import os
+from dotenv import load_dotenv
+
+project_folder = os.path.expanduser('')
+load_dotenv(os.path.join(project_folder, '.env'))
 
 BASEDIR = os.path.abspath(os.path.dirname(__file__))
 
-DB_NAME = "workout-tracker-debug"
-DB_USERNAME = "root"
-DB_PASSWORD = ""
-DB_HOST = "localhost"
-DB_PORT = 3306
+DB_NAME = os.getenv('DB_NAME')
+DB_USERNAME = os.getenv('DB_USERNAME')
+DB_PASSWORD = os.getenv('DB_PASSWORD')
+DB_HOST = os.getenv('DB_HOST')
+DB_PORT = os.getenv('DB_PORT')
 
 class Config(object):
     FLASK_ENV = 'development'
