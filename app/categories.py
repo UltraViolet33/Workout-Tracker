@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, flash
+from flask import Blueprint, render_template, redirect, flash, request
 from . import db
 from .models.Category import Category
 from .forms import CategoryForm
@@ -27,7 +27,7 @@ def create_category():
 
     form = CategoryForm()
 
-    if form.validate_on_submit():
+    if form.validate_on_submit() or request.form.get("name"):
         check_category_exits = Category.query.filter_by(name=form.name.data).first()
 
         if check_category_exits == None:

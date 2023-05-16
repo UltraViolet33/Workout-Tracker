@@ -32,6 +32,7 @@ class DevelopmentConfig(Config):
 
 
 class TestingConfig(object):
+    WTF_CSRF_ENABLED = False
     TESTING = True
     SECRET_KEY = os.getenv('SECRET_KEY', default='BAD_SECRET_KEY')
     SQLALCHEMY_DATABASE_URI = f"sqlite:///{os.path.join(BASEDIR, 'instance', 'test.db')}"

@@ -1,13 +1,10 @@
 from flask import url_for
-from app import create_app
+from app import create_app, db
 from app.models.Session import Session
 from app.models.Exercise import Exercise
 from app.models.Category import Category
 from app.models.Session import Session_Exercises
-
-
 from datetime import datetime
-from app import db
 
 
 def test_route_all_sessions(test_client, init_database):
@@ -29,7 +26,6 @@ def test_get_session_details(test_client, init_database):
 
 
 def test_create_session(test_client, init_database):
-
     category = Category.query.filter_by(name="category1").first()
     exercise = Exercise(name="Test Exercise", description="desc", category=category)
     db.session.add(exercise)
@@ -42,7 +38,6 @@ def test_create_session(test_client, init_database):
     })
 
     assert response.status_code == 200
-
     assert b"Exo added to session" in response.data
 
     session_exercise = Session_Exercises.query.filter_by(
