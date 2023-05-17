@@ -1,16 +1,16 @@
+import os
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-import os
 import sqlalchemy as sa
 from flask_wtf.csrf import CSRFProtect
 
 db = SQLAlchemy()
 csrf = CSRFProtect()
 
+
 def create_app(config_type=None):
     app = Flask(__name__)
     csrf.init_app(app)
-    app.config['WTF_CSRF_ENABLED'] = False
 
     if config_type == None:
         config_type = os.getenv(
@@ -40,10 +40,8 @@ def register_blueprints(app):
     from .categories import categories
     app.register_blueprint(categories, url_prefix="/categories")
 
-
     from .exercices import exercises
     app.register_blueprint(exercises, url_prefix="/exos")
 
-    
     from .sessions import sessions
     app.register_blueprint(sessions, url_prefix="/")

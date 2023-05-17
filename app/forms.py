@@ -7,14 +7,13 @@ class CategoryForm(FlaskForm):
     name = StringField("name", validators=[DataRequired()])
 
 
-
 class ExerciseForm(FlaskForm):
     name = StringField("name", validators=[DataRequired()])
     description = TextAreaField("description")
     category = SelectField(validators=[DataRequired()])
 
 
-class SessionForm(FlaskForm):    
+class SessionForm(FlaskForm):
     exo = SelectField(validators=[DataRequired()])
     serie = IntegerField(validators=[DataRequired()])
     repetition = IntegerField(validators=[DataRequired()])

@@ -38,7 +38,6 @@ def create_exercise():
     return render_template("formExo.html", form=form)
 
 
-
 @exercises.route("/edit/<id>", methods=["GET", "POST"])
 def edit_exos(id):
     exo = Exercise.query.filter_by(id=id).first()
@@ -53,19 +52,21 @@ def edit_exos(id):
         form.description.data = exo.description
 
     if form.validate_on_submit():
-        check_exo_exits = Exercise.query.filter(Exercise.name==form.name.data, Exercise.id != exo.id).first()
+        check_exo_exits = Exercise.query.filter(
+            Exercise.name == form.name.data, Exercise.id != exo.id).first()
 
         if check_exo_exits == None:
-            exo.name = form.name.data 
+            exo.name = form.name.data
             exo.description = form.description.data
-            exo.category = Category.query.filter_by(id=form.category.data).first()
+            exo.category = Category.query.filter_by(
+                id=form.category.data).first()
             db.session.commit()
             flash("Exo edited !")
             return redirect("/exos/all")
 
         else:
             flash("Exo name alreadry exist !", category="error")
-    
+
     return render_template("formExo.html", exo=exo, form=form)
 
 
@@ -75,10 +76,8 @@ def delete_exo(id):
     if not exo:
         flash("This exo does not exits", category="error")
         return redirect("/exos/all")
-    
+
     db.session.delete(exo)
     db.session.commit()
     flash("Exo deleted !")
     return redirect("/exos/all")
-
-

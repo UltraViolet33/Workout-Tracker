@@ -1,10 +1,6 @@
-from flask import url_for
-from app import create_app, db
-from app.models.Session import Session
+from app import db
 from app.models.Exercise import Exercise
 from app.models.Category import Category
-from app.models.Session import Session_Exercises
-from datetime import datetime
 
 
 def test_get_all_categories(test_client, init_database):
@@ -23,7 +19,8 @@ def test_get_all_categories(test_client, init_database):
 
 def test_get_exos_category(test_client, init_database):
     category = Category(name="Test Category")
-    exercise = Exercise(name="Test Exercise", description="desc", category=category)
+    exercise = Exercise(name="Test Exercise",
+                        description="desc", category=category)
     db.session.add_all([category, exercise])
     db.session.commit()
 
@@ -34,5 +31,3 @@ def test_get_exos_category(test_client, init_database):
     assert category.name in str(response.data)
     for exercise in category.exercises:
         assert exercise.name in str(response.data)
-
-

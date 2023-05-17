@@ -1,15 +1,14 @@
-from flask import url_for
-from app import create_app, db
-from app.models.Session import Session
+from app import db
 from app.models.Exercise import Exercise
 from app.models.Category import Category
-from app.models.Session import Session_Exercises
-from datetime import datetime
+
 
 def test_get_all_exos(test_client, init_database):
     category = Category.query.filter_by(name="category1").first()
-    exo1 = Exercise(name="Test Exercise 1", description="Test Description 1", category=category)
-    exo2 = Exercise(name="Test Exercise 2", description="Test Description 2", category=category)
+    exo1 = Exercise(name="Test Exercise 1",
+                    description="Test Description 1", category=category)
+    exo2 = Exercise(name="Test Exercise 2",
+                    description="Test Description 2", category=category)
     db.session.add_all([exo1, exo2])
     db.session.commit()
 

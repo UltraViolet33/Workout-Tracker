@@ -55,4 +55,3 @@ def create_session():
         flash("Exo added to session")
 
     return render_template("formSession.html", form=form, today=datetime.today().strftime('%Y-%m-%d'))
-

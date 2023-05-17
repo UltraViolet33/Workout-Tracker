@@ -1,10 +1,8 @@
-from flask import url_for
-from app import create_app, db
+from app import db
 from app.models.Session import Session
 from app.models.Exercise import Exercise
 from app.models.Category import Category
 from app.models.Session import Session_Exercises
-from datetime import datetime
 
 
 def test_route_all_sessions(test_client, init_database):
@@ -24,10 +22,10 @@ def test_get_session_details(test_client, init_database):
     assert session.date.strftime("%Y-%m-%d") in str(response.data)
 
 
-
 def test_create_session(test_client, init_database):
     category = Category.query.filter_by(name="category1").first()
-    exercise = Exercise(name="Test Exercise", description="desc", category=category)
+    exercise = Exercise(name="Test Exercise",
+                        description="desc", category=category)
     db.session.add(exercise)
     db.session.commit()
 
