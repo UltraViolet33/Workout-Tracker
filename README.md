@@ -1,3 +1,3 @@
 # Workout Tracker
 
-My personal workout tracker made with Flask
+My personal workout tracker made with Flask, SQLAlchemy, WTF
